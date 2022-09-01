@@ -7,17 +7,20 @@
 </xsl:template>
 
 <xsl:template match="//enums">
-   <h2>MAVLink Type Enumerations</h2>
+   <h2 id="enums">MAVLink Type Enumerations</h2>
    <xsl:apply-templates select="enum[@name!='MAV_CMD']" />
 
-   <h2>MAVLink Commands (MAV_CMD)</h2>
+   <a id="MAV_CMD"></a>
+   <h2 id="mav_commands">MAVLink Commands (MAV_CMD)</h2>
+   <blockquote class="alert alert-info clearfix"><strong class="fa fa-2x fa-edit"></strong><p>MAVLink commands (MAV_CMD) and messages are different! These commands define the values of up to 7 parameters that are packaged INSIDE specific messages used in the Mission Protocol and Command Protocol. Use commands for actions in missions or if you need acknowledgment and/or retry logic from a request. Otherwise use messages.</p></blockquote>
    <xsl:apply-templates select="enum[@name='MAV_CMD']" mode="params"/>
+
 </xsl:template>
 
 
 
 <xsl:template match="//messages">
-   <h2>MAVLink Messages</h2>
+   <h2 id="messages">MAVLink Messages</h2>
    <xsl:apply-templates />
 </xsl:template>
 
@@ -32,7 +35,7 @@
   )</h3>
    <xsl:apply-templates select="wip" />
    <xsl:apply-templates select="deprecated" />
-   <p> <!-- description -->
+   <p> <!-- description --><a href="#messages">[Message]</a>
      <xsl:if test='@id > 255'><strong>(MAVLink 2) </strong></xsl:if>
      <xsl:value-of select="description" /></p>
    <table class="sortable">
@@ -77,12 +80,13 @@
    </xsl:if>
    
    <xsl:if test='../*/@enum'>
-     <td> 
+   <td><xsl:if test='@enum'>
       <a><xsl:attribute name="href">#<xsl:value-of select="@enum" /></xsl:attribute><xsl:value-of select="@enum" /></a>
-     </td> <!-- mavlink_value -->
+      </xsl:if>
+   </td> <!-- mavlink_value -->
    </xsl:if>
      
-   <td> <xsl:value-of select="." /> </td> <!-- mavlink_comment -->
+   <td><xsl:value-of select="." /></td> <!-- mavlink_comment -->
    </tr>
 </xsl:template>
 
@@ -97,12 +101,11 @@
 
 
 <xsl:template match="//enum">
-   <h3> <!-- mavlink_message_name -->
+   <h3> <!-- mavlink_enum_name -->
      <xsl:attribute name="id"><xsl:value-of select="@name"/></xsl:attribute>
-     <a><xsl:attribute name="href">#<xsl:value-of select="@name"/></xsl:attribute>
-     <xsl:value-of select="@name" /></a></h3>
+     <xsl:value-of select="@name" /></h3>
    <xsl:apply-templates select="deprecated" />  
-   <p><xsl:value-of select="description" /></p> <!-- description -->
+   <p><a href="#enums">[Enum]</a><xsl:value-of select="description" /></p> <!-- description -->
    <table class="sortable">
    <thead>
    <tr> <!-- mavlink_field_header -->
@@ -128,7 +131,7 @@
    <h3 id="{@name}"><xsl:value-of select="@name" /> (<a><xsl:attribute name="href">#<xsl:value-of select="@name"/></xsl:attribute><xsl:value-of select="@value" /></a>)</h3>
       <xsl:apply-templates select="deprecated" />
       <xsl:apply-templates select="wip" />
-      <p><xsl:value-of select="description" /> </p> <!-- mavlink_comment -->
+      <p><a href="#mav_commands">[Command]</a><xsl:value-of select="description" /> </p> <!-- mavlink_comment -->
 
 
    <table class="sortable">
@@ -186,8 +189,8 @@
         <xsl:if test='@label'>: <xsl:value-of select="@label" /></xsl:if>
         </td> <!-- mission_param -->
 
-        <td><xsl:value-of select="." />
-         <xsl:if test='@decimalPlaces'><br /><strong>GCS display settings:</strong>
+        <td><xsl:if test='@reserved = "true"'>Reserved (set to <xsl:if test='@default'><xsl:value-of select="@default" /></xsl:if><xsl:if test='not(@default)'>0</xsl:if>)</xsl:if><xsl:value-of select="." />
+            <xsl:if test='@decimalPlaces'><br /><strong>GCS display settings:</strong>
             <xsl:if test='@label'><em>Label:</em> <xsl:value-of select="@label" />, </xsl:if>
             <xsl:if test='@decimalPlaces'><em>decimalPlaces:</em> <xsl:value-of select="@decimalPlaces" /></xsl:if>
          </xsl:if>
@@ -198,7 +201,7 @@
      <td>
       <xsl:choose>
          <xsl:when test="@enum">
-           <xsl:value-of select="@enum" />
+           <a><xsl:attribute name="href">#<xsl:value-of select="@enum" /></xsl:attribute><xsl:value-of select="@enum" /></a>
          </xsl:when>
          <xsl:when test="@minValue or @maxValue or @increment ">
            <xsl:if test='@minValue'><em>min:</em><xsl:value-of select="@minValue" /><xsl:text>xxx_space_xxx</xsl:text></xsl:if>
