@@ -7448,9 +7448,9 @@
       <description>Status from a device which measures temperature.</description>
       <field type="uint8_t" name="channel">ID number of the thermometer channel.</field>
       <field type="char[16]" name="name">Descriptive name for the thermometer channel; terminated by NULL if length less than 16 human-readable chars, and without if length is exactly 16.</field>
-      <field type="uint16_t" name="t_act" units="Kelvin">Measured temperature from the thermometer channel.</field>
-      <field type="uint16_t" name="t_max" units="Kelvin">Maximum permissible temperature for this channel.  Set to UINT16_MAX for no limit.</field>
-      <field type="uint16_t" name="t_min" units="Kelvin">Minimum permissible temperature for this channel.  Set to UINT16_MAX for no limit (or zero probably also works in most practical applications).</field>
+      <field type="uint16_t" name="t_act" units="K">Measured temperature from the thermometer channel.</field>
+      <field type="uint16_t" name="t_max" units="K">Maximum permissible temperature for this channel.  Set to UINT16_MAX for no limit.</field>
+      <field type="uint16_t" name="t_min" units="K">Minimum permissible temperature for this channel.  Set to UINT16_MAX for no limit (or zero probably also works in most practical applications).</field>
       <field type="uint8_t" name="flags" enum="TEMPERATURE_STATUS_FLAGS" display="bitmask">Bitmap of temperature status flags.</field>
     </message>
     <!-- Rover specific messages -->
