@@ -4975,28 +4975,6 @@
         <description>Mission has executed all mission items.</description>
       </entry>
     </enum>
-    <enum name="VOLTAGE_REGULATOR_STATUS_FLAG">
-      <entry value="1" name="VOLTAGE_REGULATOR_STATUS_HEALTHY">
-        <description>The regulator is operating normally.</description>
-      </entry>
-      <entry value="2" name="VOLTAGE_REGULATOR_STATUS_OC">
-        <description>The regulator is in an over-current condition.</description>
-      </entry>
-      <entry value="4" name="VOLTAGE_REGULATOR_STATUS_UV">
-        <description>The regulator is in an under-voltage condition.</description>
-      </entry>
-      <entry value="8" name="VOLTAGE_REGULATOR_STATUS_OV">
-        <description>The regulator is in an over-voltage condition.</description>
-      </entry>
-    </enum>
-    <enum name="TEMPERATURE_STATUS_FLAG">
-      <entry value="1" name="TEMPERATURE_STATUS_OT">
-        <description>The thermometer is in an over-temperature condition.</description>
-      </entry>
-      <entry value="2" name="TEMPERATURE_STATUS_UT">
-        <description>The thermometer is in an under-temperature condition.</description>
-      </entry>
-    </enum>
   </enums>
   <messages>
     <message id="1" name="SYS_STATUS">
@@ -7544,31 +7522,6 @@
       <field type="uint8_t" name="operation" enum="CAN_FILTER_OP">what operation to perform on the filter list. See CAN_FILTER_OP enum.</field>
       <field type="uint8_t" name="num_ids">number of IDs in filter list</field>
       <field type="uint16_t[16]" name="ids">filter IDs, length num_ids</field>
-    </message>
-    <message id="5008" name="VOLTAGE_REGULATOR_STATUS">
-      <wip/>
-      <!-- This message is work-in-progress it can therefore change, and should NOT be used in stable production environments -->
-      <description>Status from a voltage regulator.</description>
-      <field type="uint8_t" name="channel">ID number for the regulator channel.</field>
-      <field type="char[16]" name="name">Descriptive name for the regulator channel; terminated by NULL if length less than 16 human-readable chars, and without if length is exactly 16.</field>
-      <field type="uint16_t" name="v_nom" units="mV">Nominal voltage of the regulator channel.  If unknown, set to UINT16_MAX.</field>
-      <field type="uint16_t" name="v_act" units="mV">Measured voltage of the regulator channel.  If unmeasured, set to UINT16_MAX.</field>
-      <field type="uint16_t" name="v_max" units="mV">Maximum permissible voltage.  Set to UINT16_MAX for no limit.</field>
-      <field type="uint16_t" name="v_min" units="mV">Minimum permissible voltage.  Set to UINT16_MAX for no limit.</field>
-      <field type="uint16_t" name="i_act" units="mA">Measured current of the regulator channel.  If unmeasured, set to UINT16_MAX.</field>
-      <field type="uint16_t" name="i_max" units="mA">Maximum permissible current.  Set to UINT16_MAX for no limit.</field>
-      <field type="uint16_t" name="flags" enum="VOLTAGE_REGULATOR_STATUS_FLAGS" display="bitmask">Bitmap of regulator status flags.</field>
-    </message>
-    <message id="5009" name="TEMPERATURE_STATUS">
-      <wip/>
-      <!-- This message is work-in-progress it can therefore change, and should NOT be used in stable production environments -->
-      <description>Status from a device which measures temperature.</description>
-      <field type="uint8_t" name="channel">ID number of the thermometer channel.</field>
-      <field type="char[16]" name="name">Descriptive name for the thermometer channel; terminated by NULL if length less than 16 human-readable chars, and without if length is exactly 16.</field>
-      <field type="uint16_t" name="t_act" units="K">Measured temperature from the thermometer channel.</field>
-      <field type="uint16_t" name="t_max" units="K">Maximum permissible temperature for this channel.  Set to UINT16_MAX for no limit.</field>
-      <field type="uint16_t" name="t_min" units="K">Minimum permissible temperature for this channel.  Set to UINT16_MAX for no limit (or zero probably also works in most practical applications).</field>
-      <field type="uint8_t" name="flags" enum="TEMPERATURE_STATUS_FLAGS" display="bitmask">Bitmap of temperature status flags.</field>
     </message>
     <!-- Rover specific messages -->
     <message id="9000" name="WHEEL_DISTANCE">
