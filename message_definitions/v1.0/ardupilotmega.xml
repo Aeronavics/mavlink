@@ -1780,5 +1780,12 @@
       <field type="uint16_t" name="MCU_voltage_min" units="mV">MCU voltage minimum</field>
       <field type="uint16_t" name="MCU_voltage_max" units="mV">MCU voltage maximum</field>
     </message>
+    <message id="11045" name="SHORT_RADAR_TELEM">
+      <description>Condensed radar telemetry.</description>
+      <field type="uint8_t" name="sensor_id">Sensor ID.</field>
+      <field type="int16_t" name="yaw" units="mdeg">Yaw to Obstacle.</field>
+      <field type="int16_t" name="pitch" units="mdeg">Pitch to Obstacle.</field>
+      <field type="int16_t" name="distance" units="mm">Distance to Obstacle.</field>
+    </message>
   </messages>
 </mavlink>
