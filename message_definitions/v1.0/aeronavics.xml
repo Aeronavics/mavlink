@@ -133,6 +133,29 @@
                 <description>Hand controller for payload controls</description>
             </entry>
         </enum>
+        <enum name="ANV_SPRAY_ERROR">
+            <entry value="1" name="ANV_SPRAY_ERROR_FLOWRATE1">
+                <description>Nozzle 1 has a flow rate error</description>
+            </entry>
+            <entry value="2" name="ANV_SPRAY_ERROR_FLOWRATE2">
+                <description>Nozzle 2 has a flow rate error</description>
+            </entry>
+            <entry value="4" name="ANV_SPRAY_ERROR_FLOWRATE3">
+                <description>Nozzle 3 has a flow rate error</description>
+            </entry>
+            <entry value="8" name="ANV_SPRAY_ERROR_FLOWRATE4">
+                <description>Nozzle 4 has a flow rate error</description>
+            </entry>
+            <entry value="16" name="ANV_SPRAY_ERROR_LOW_PRESSURE">
+                <description>Low pressure detected in spray system</description>
+            </entry>
+            <entry value="32" name="ANV_SPRAY_ERROR_OVER_PRESSURE">
+                <description>Over pressure detected in spray system</description>
+            </entry>
+            <entry value="32" name="ANV_SPRAY_ERROR_NO_SPRAY">
+                <description>No spray remaining or error with the spray measurement system</description>
+            </entry>
+        </enum>
     </enums>
 
     <messages>
@@ -268,6 +291,15 @@
             <description>A message for getting and setting sysids between ACs and GCSs</description>
             <field type="uint16_t" name="serial_number">AC serial number</field>
             <field type="uint8_t" name="sysid">AC sysid</field>
+        </message>
+        <message id="5017" name="ANV_MSG_SPRAY_STATUS">
+            <description>Telemetry of the spray system.</description>
+            <field type="uint16_t" name="measured_flowrate">Measured Flowrate</field>
+            <field type="uint16_t" name="desired_flowrate">Desired Flowrate</field>
+            <field type="double" name="sprayed_volume">Volume Sprayed</field>
+            <field type="double" name="spray_remaining">Spray Remaining</field>
+            <field type="uint16_t" name="pressure">Measured Pressure</field>
+            <field type="uint8_t" name="error" enum="ANV_SPRAY_ERROR">Spray Error</field>
         </message>
     </messages>
 </mavlink>
