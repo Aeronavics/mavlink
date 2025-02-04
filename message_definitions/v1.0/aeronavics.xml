@@ -152,7 +152,7 @@
             <entry value="32" name="ANV_SPRAY_ERROR_OVER_PRESSURE">
                 <description>Over pressure detected in spray system</description>
             </entry>
-            <entry value="32" name="ANV_SPRAY_ERROR_NO_SPRAY">
+            <entry value="64" name="ANV_SPRAY_ERROR_NO_SPRAY">
                 <description>No spray remaining or error with the spray measurement system</description>
             </entry>
         </enum>
