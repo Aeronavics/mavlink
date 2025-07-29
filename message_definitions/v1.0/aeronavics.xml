@@ -159,64 +159,6 @@
     </enums>
 
     <messages>
-        <!-- MESSAGE IDs 180 - 240: Space for custom messages in individual projectname_messages.xml files -->
-        <message id="1950" name="PIKSI_MSG_OBS">
-            <description>The raw pseduorange and carrier phase observations for satellites being tracked by the Piksi</description>
-            <!-- Header for the GPS observations -->
-            <field type="uint8_t" name="n_observations">Total number of observations in this packet (Between 0 and 3)</field>
-            <field type="uint32_t" name="tow">Milliseconds since start of GPS week</field>
-            <field type="uint16_t" name="week">GPS week number</field>
-            <field type="uint8_t" name="n_packets">Total number of observation packets. First nibble is the number of packets in the sequence (n). Second nibble is the zero-indexed counter (0 to n-1)</field>
-            <!-- GPS Satellite Observations -->
-            <field type="uint32_t[3]" name="P">Pseudorange observation</field>
-            <field type="int32_t[3]" name="L_i">Carrier phase whole cycles</field>
-            <field type="uint8_t[3]" name="L_f">Carrier phase fractional part</field>
-            <field type="uint8_t[3]" name="cn0">Carrier-to-Noise Density</field>
-            <field type="uint16_t[3]" name="lock">Lock indicator. This changes whenever a satellite signal has lost and regained lock, indicating the carrier phase ambiguity may have changed</field>
-            <field type="uint32_t[3]" name="sid">PRN-1 identifier of the satellite signal</field>
-        </message>
-        <message id="196" name="PIKSI_MSG_BASE_POS">
-            <description>The base station position message reported by the base station for use in pseudo-absolute RTK positioning</description>
-            <field type="double" name="lat">Basestation latitude</field>
-            <field type="double" name="lon">Basestation longitude</field>
-            <field type="double" name="height">Basestation height</field>
-        </message>
-        <message id="197" name="PIKSI_MSG_EPHEMERIS">
-            <description>A set of satellite orbits used to calculate GPS satellite position, velocity and clock offset.</description>
-            <field type="double" name="tgd">Group delay differential between L1 and L2</field>
-            <field type="double" name="c_rs">Amplitude of the sine harmonic correction term to the orbit radius</field>
-            <field type="double" name="c_rc">Amplitude of the cosine harmoinic correction term to the orbit radius</field>
-            <field type="double" name="c_uc">Amplitude of the sine harmoinic correction term to the argument of latitude</field>
-            <field type="double" name="c_us">Amplitude of the cosine harmoinic correction term to the argument of latitude</field>
-            <field type="double" name="c_ic">Amplitude of the sine harmoinic correction term to the angle of inclination</field>
-            <field type="double" name="c_is">Amplitude of the cosine harmoinic correction term to the angle of inclination</field>
-            <field type="double" name="dn">Mean motion difference</field>
-            <field type="double" name="m0">Mean anomaly at reference time</field>
-            <field type="double" name="ecc">Eccentricity of satellite orbit</field>
-            <field type="double" name="sqrta">Square root of the semi-major axis of orbit</field>
-            <field type="double" name="omega0">Longitude of ascending node of orbit plane at weekly epoch</field>
-            <field type="double" name="omegadot">Rate of right ascension</field>
-            <field type="double" name="w">Argument of perigee</field>
-            <field type="double" name="inc">Inclination</field>
-            <field type="double" name="inc_dot">Inclination first derivative</field>
-            <field type="double" name="af0">Polynomial clock correction coefficient (clock bias)</field>
-            <field type="double" name="af1">Polynomial clock correction coefficient (clock drift)</field>
-            <field type="double" name="af2">Polynomial clock correction coefficient (rate of clock drift)</field>
-            <field type="double" name="toe_tow">Time of week</field>
-            <field type="uint16_t" name="toe_wn">Week number</field>
-            <field type="double" name="toc_tow">Clock reference time of week</field>
-            <field type="uint16_t" name="toc_wn">Clock reference week number</field>
-            <field type="uint8_t" name="valid">Is valid?</field>
-            <field type="uint8_t" name="healthy">Satellite is healthy?</field>
-            <field type="uint32_t" name="sid">Signal identifier being tracked. Values 0x00 through 0x1F represent GPS PRNs 1 through 32 (PRN-1 notation). Other values reserved for future use.</field>
-            <field type="uint8_t" name="iode">Issue of ephemeris data</field>
-            <field type="uint16_t" name="iodc">Issue of clock data</field>
-            <field type="uint32_t" name="reserved">Reserved field</field>
-        </message>
-        <message id="198" name="PIKSI_RESTART">
-            <description>A command for instructing the Piksi to restart.</description>
-            <field type="uint8_t" name="none">Empty byte to satisfy the MAVLink Generator</field>
-        </message>
         <message id="5000" name="ANV_MSG_REGULATOR_STATUS">
             <description>A command for outputing a regulator's status. This includes it's output voltage, current and temperature.</description>
             <field type="uint8_t" name="id">ID of the regulator</field>

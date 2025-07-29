@@ -5,6 +5,10 @@
     commands: 42000 - 42999
   -->
   <include>ardupilotmega.xml</include>
+  <!-- aeronavics.xml range of IDs:
+    messages: 5000 - 5017
+  -->
+  <include>aeronavics.xml</include>
   <!-- ASLUAV.xml range of IDs:
     messages: 8000 - 8999
     commands: 40001 - 41999
