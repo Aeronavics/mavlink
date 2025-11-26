@@ -159,7 +159,7 @@
     </enums>
 
     <messages>
-        <message id="5000" name="ANV_MSG_REGULATOR_STATUS">
+        <message id="5000" name="ANV_REGULATOR_STATUS">
             <description>A command for outputing a regulator's status. This includes it's output voltage, current and temperature.</description>
             <field type="uint8_t" name="id">ID of the regulator</field>
             <field type="uint16_t" name="voltage">Voltage output of the regulator measured in mV</field>
@@ -168,7 +168,7 @@
             <field type="uint16_t" name="max_rated_current">The rated current of the regulator measured in mA</field>
             <field type="uint16_t" name="consumed_power">The integral of used power of the regulator. Measured in mAH</field>
         </message>
-        <message id="5001" name="ANV_MSG_BUFFER_STATUS">
+        <message id="5001" name="ANV_BUFFER_STATUS">
             <description>A message for viewing a buffers status</description>
             <field type="uint8_t" name="id">ID of the buffer</field>
             <field type="uint16_t" name="buffer_type">Buffer type</field>
@@ -176,27 +176,27 @@
             <field type="uint16_t" name="max_space">Temerature of the regulator measured in milli Degrees Celsius</field>
             <field type="uint16_t" name="avg_space">The rated current of the regulator measured in mA</field>
         </message>
-        <message id="5002" name="ANV_MSG_GSIB_DATA">
+        <message id="5002" name="ANV_GSIB_DATA">
             <description>A message for transmitting the data from the UI baord.</description>
             <field type="uint32_t[11]" name="an_channel">Analog_channels.</field>
             <field type="uint32_t" name="dig_channel">Bit mask of the Digital Switches' state</field>
         </message>
-        <message id="5003" name="ANV_MSG_SBUS_DATA">
+        <message id="5003" name="ANV_SBUS_DATA">
             <description>A message for passing around a raw sbus frame.</description>
             <field type="uint8_t[25]" name="sbus_data">Raw SBUS data</field>
         </message>
-        <message id="5004" name="ANV_MSG_RADIO_DATA">
+        <message id="5004" name="ANV_RADIO_DATA">
             <description>A message for passing around control frames. This is very similar to ID 5003, but is intended to be sent to the airside receiver. This seperates the reception of sbus data and the transmition</description>
             <field type="uint8_t" name="target_system">Target system ID</field>
             <field type="uint8_t" name="target_component">Target component ID</field>
             <field type="uint8_t[25]" name="sbus_data">Raw SBUS data</field>
             <field type="uint64_t" name="timestamp">System time of when the message was sent</field>
         </message>
-        <message id="5005" name="ANV_MSG_FIRMWARE_INFORMATION">
+        <message id="5005" name="ANV_FIRMWARE_INFORMATION">
             <description>A message for relaying currently running software verions</description>
             <field type="uint32_t" name="firmware">Currently running firmware version</field>
         </message>
-        <message id="5006" name="ANV_MSG_GSCB_DATA">
+        <message id="5006" name="ANV_GSCB_DATA">
             <description>A message for transmitting the data from the UI baord.</description>
             <field type="uint8_t" name="active_profile">The current profile in use</field>
             <field type="uint8_t" name="battery_1_enabled">1 if the battery is enabled, 0 otherwise</field>
@@ -205,7 +205,7 @@
             <field type="uint8_t" name="tray_fan_enabled">1 if the tray fan is enabled, 0 otherwise</field>
             <field type="uint8_t" name="electronics_fan_enabled">1 if the electronics fan is enabled, 0 otherwise</field>
         </message>
-        <message id="5007" name="ANV_MSG_LATENCY_REPORT">
+        <message id="5007" name="ANV_LATENCY_REPORT">
             <description>
                 A response to a specific target of a ping. 
                 This lets the target know the latency of the ping it responded to
@@ -215,26 +215,26 @@
             <field type="uint64_t" name="latency">The latency recorded by the host ping</field>
             <field type="uint32_t" name="seq">The sequence ID of the ping request</field>
         </message>
-        <message id="5013" name="ANV_MSG_SMART_PORT_POLL_PACKET">
+        <message id="5013" name="ANV_SMART_PORT_POLL_PACKET">
             <description> A message for passing around a smart port poll packet.</description>
             <field type="uint8_t[2]" name="smart_port_poll_packet">Smart port poll packet</field>
         </message>
-        <message id="5014" name="ANV_MSG_GS_CTRL_DATA">
+        <message id="5014" name="ANV_GS_CTRL_DATA">
             <description>A message for transmitting the data from the UI baord.</description>
             <field type="uint8_t" name="controller_id" enum="ANV_CONTROLLER">Controller id</field>
             <field type="uint32_t[11]" name="an_channel">Analog_channels.</field>
             <field type="uint32_t" name="dig_channel">Bit mask of the Digital Switches' state</field>
         </message>
-        <message id="5015" name="ANV_MSG_GSMC_DATA">
+        <message id="5015" name="ANV_GSMC_DATA">
             <description>A message for transmitting the data from the ground station mission computer.</description>
             <field type="char[16]" name="gsmc_ip">Ground Station IP</field>
         </message>
-        <message id="5016" name="ANV_MSG_SYSID">
+        <message id="5016" name="ANV_SYSID">
             <description>A message for getting and setting sysids between ACs and GCSs</description>
             <field type="uint16_t" name="serial_number">AC serial number</field>
             <field type="uint8_t" name="sysid">AC sysid</field>
         </message>
-        <message id="5017" name="ANV_MSG_SPRAY_STATUS">
+        <message id="5017" name="ANV_SPRAY_STATUS">
             <description>Telemetry of the spray system.</description>
             <field type="uint16_t" name="measured_flowrate">Measured Flowrate</field>
             <field type="uint16_t" name="desired_flowrate">Desired Flowrate</field>
