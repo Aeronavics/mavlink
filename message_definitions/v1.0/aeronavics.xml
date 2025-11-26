@@ -159,65 +159,7 @@
     </enums>
 
     <messages>
-        <!-- MESSAGE IDs 180 - 240: Space for custom messages in individual projectname_messages.xml files -->
-        <message id="1950" name="PIKSI_MSG_OBS">
-            <description>The raw pseduorange and carrier phase observations for satellites being tracked by the Piksi</description>
-            <!-- Header for the GPS observations -->
-            <field type="uint8_t" name="n_observations">Total number of observations in this packet (Between 0 and 3)</field>
-            <field type="uint32_t" name="tow">Milliseconds since start of GPS week</field>
-            <field type="uint16_t" name="week">GPS week number</field>
-            <field type="uint8_t" name="n_packets">Total number of observation packets. First nibble is the number of packets in the sequence (n). Second nibble is the zero-indexed counter (0 to n-1)</field>
-            <!-- GPS Satellite Observations -->
-            <field type="uint32_t[3]" name="P">Pseudorange observation</field>
-            <field type="int32_t[3]" name="L_i">Carrier phase whole cycles</field>
-            <field type="uint8_t[3]" name="L_f">Carrier phase fractional part</field>
-            <field type="uint8_t[3]" name="cn0">Carrier-to-Noise Density</field>
-            <field type="uint16_t[3]" name="lock">Lock indicator. This changes whenever a satellite signal has lost and regained lock, indicating the carrier phase ambiguity may have changed</field>
-            <field type="uint32_t[3]" name="sid">PRN-1 identifier of the satellite signal</field>
-        </message>
-        <message id="196" name="PIKSI_MSG_BASE_POS">
-            <description>The base station position message reported by the base station for use in pseudo-absolute RTK positioning</description>
-            <field type="double" name="lat">Basestation latitude</field>
-            <field type="double" name="lon">Basestation longitude</field>
-            <field type="double" name="height">Basestation height</field>
-        </message>
-        <message id="197" name="PIKSI_MSG_EPHEMERIS">
-            <description>A set of satellite orbits used to calculate GPS satellite position, velocity and clock offset.</description>
-            <field type="double" name="tgd">Group delay differential between L1 and L2</field>
-            <field type="double" name="c_rs">Amplitude of the sine harmonic correction term to the orbit radius</field>
-            <field type="double" name="c_rc">Amplitude of the cosine harmoinic correction term to the orbit radius</field>
-            <field type="double" name="c_uc">Amplitude of the sine harmoinic correction term to the argument of latitude</field>
-            <field type="double" name="c_us">Amplitude of the cosine harmoinic correction term to the argument of latitude</field>
-            <field type="double" name="c_ic">Amplitude of the sine harmoinic correction term to the angle of inclination</field>
-            <field type="double" name="c_is">Amplitude of the cosine harmoinic correction term to the angle of inclination</field>
-            <field type="double" name="dn">Mean motion difference</field>
-            <field type="double" name="m0">Mean anomaly at reference time</field>
-            <field type="double" name="ecc">Eccentricity of satellite orbit</field>
-            <field type="double" name="sqrta">Square root of the semi-major axis of orbit</field>
-            <field type="double" name="omega0">Longitude of ascending node of orbit plane at weekly epoch</field>
-            <field type="double" name="omegadot">Rate of right ascension</field>
-            <field type="double" name="w">Argument of perigee</field>
-            <field type="double" name="inc">Inclination</field>
-            <field type="double" name="inc_dot">Inclination first derivative</field>
-            <field type="double" name="af0">Polynomial clock correction coefficient (clock bias)</field>
-            <field type="double" name="af1">Polynomial clock correction coefficient (clock drift)</field>
-            <field type="double" name="af2">Polynomial clock correction coefficient (rate of clock drift)</field>
-            <field type="double" name="toe_tow">Time of week</field>
-            <field type="uint16_t" name="toe_wn">Week number</field>
-            <field type="double" name="toc_tow">Clock reference time of week</field>
-            <field type="uint16_t" name="toc_wn">Clock reference week number</field>
-            <field type="uint8_t" name="valid">Is valid?</field>
-            <field type="uint8_t" name="healthy">Satellite is healthy?</field>
-            <field type="uint32_t" name="sid">Signal identifier being tracked. Values 0x00 through 0x1F represent GPS PRNs 1 through 32 (PRN-1 notation). Other values reserved for future use.</field>
-            <field type="uint8_t" name="iode">Issue of ephemeris data</field>
-            <field type="uint16_t" name="iodc">Issue of clock data</field>
-            <field type="uint32_t" name="reserved">Reserved field</field>
-        </message>
-        <message id="198" name="PIKSI_RESTART">
-            <description>A command for instructing the Piksi to restart.</description>
-            <field type="uint8_t" name="none">Empty byte to satisfy the MAVLink Generator</field>
-        </message>
-        <message id="5000" name="ANV_MSG_REGULATOR_STATUS">
+        <message id="5000" name="ANV_REGULATOR_STATUS">
             <description>A command for outputing a regulator's status. This includes it's output voltage, current and temperature.</description>
             <field type="uint8_t" name="id">ID of the regulator</field>
             <field type="uint16_t" name="voltage">Voltage output of the regulator measured in mV</field>
@@ -226,7 +168,7 @@
             <field type="uint16_t" name="max_rated_current">The rated current of the regulator measured in mA</field>
             <field type="uint16_t" name="consumed_power">The integral of used power of the regulator. Measured in mAH</field>
         </message>
-        <message id="5001" name="ANV_MSG_BUFFER_STATUS">
+        <message id="5001" name="ANV_BUFFER_STATUS">
             <description>A message for viewing a buffers status</description>
             <field type="uint8_t" name="id">ID of the buffer</field>
             <field type="uint16_t" name="buffer_type">Buffer type</field>
@@ -234,27 +176,27 @@
             <field type="uint16_t" name="max_space">Temerature of the regulator measured in milli Degrees Celsius</field>
             <field type="uint16_t" name="avg_space">The rated current of the regulator measured in mA</field>
         </message>
-        <message id="5002" name="ANV_MSG_GSIB_DATA">
+        <message id="5002" name="ANV_GSIB_DATA">
             <description>A message for transmitting the data from the UI baord.</description>
             <field type="uint32_t[11]" name="an_channel">Analog_channels.</field>
             <field type="uint32_t" name="dig_channel">Bit mask of the Digital Switches' state</field>
         </message>
-        <message id="5003" name="ANV_MSG_SBUS_DATA">
+        <message id="5003" name="ANV_SBUS_DATA">
             <description>A message for passing around a raw sbus frame.</description>
             <field type="uint8_t[25]" name="sbus_data">Raw SBUS data</field>
         </message>
-        <message id="5004" name="ANV_MSG_RADIO_DATA">
+        <message id="5004" name="ANV_RADIO_DATA">
             <description>A message for passing around control frames. This is very similar to ID 5003, but is intended to be sent to the airside receiver. This seperates the reception of sbus data and the transmition</description>
             <field type="uint8_t" name="target_system">Target system ID</field>
             <field type="uint8_t" name="target_component">Target component ID</field>
             <field type="uint8_t[25]" name="sbus_data">Raw SBUS data</field>
             <field type="uint64_t" name="timestamp">System time of when the message was sent</field>
         </message>
-        <message id="5005" name="ANV_MSG_FIRMWARE_INFORMATION">
+        <message id="5005" name="ANV_FIRMWARE_INFORMATION">
             <description>A message for relaying currently running software verions</description>
             <field type="uint32_t" name="firmware">Currently running firmware version</field>
         </message>
-        <message id="5006" name="ANV_MSG_GSCB_DATA">
+        <message id="5006" name="ANV_GSCB_DATA">
             <description>A message for transmitting the data from the UI baord.</description>
             <field type="uint8_t" name="active_profile">The current profile in use</field>
             <field type="uint8_t" name="battery_1_enabled">1 if the battery is enabled, 0 otherwise</field>
@@ -263,7 +205,7 @@
             <field type="uint8_t" name="tray_fan_enabled">1 if the tray fan is enabled, 0 otherwise</field>
             <field type="uint8_t" name="electronics_fan_enabled">1 if the electronics fan is enabled, 0 otherwise</field>
         </message>
-        <message id="5007" name="ANV_MSG_LATENCY_REPORT">
+        <message id="5007" name="ANV_LATENCY_REPORT">
             <description>
                 A response to a specific target of a ping. 
                 This lets the target know the latency of the ping it responded to
@@ -273,26 +215,26 @@
             <field type="uint64_t" name="latency">The latency recorded by the host ping</field>
             <field type="uint32_t" name="seq">The sequence ID of the ping request</field>
         </message>
-        <message id="5013" name="ANV_MSG_SMART_PORT_POLL_PACKET">
+        <message id="5013" name="ANV_SMART_PORT_POLL_PACKET">
             <description> A message for passing around a smart port poll packet.</description>
             <field type="uint8_t[2]" name="smart_port_poll_packet">Smart port poll packet</field>
         </message>
-        <message id="5014" name="ANV_MSG_GS_CTRL_DATA">
+        <message id="5014" name="ANV_GS_CTRL_DATA">
             <description>A message for transmitting the data from the UI baord.</description>
             <field type="uint8_t" name="controller_id" enum="ANV_CONTROLLER">Controller id</field>
             <field type="uint32_t[11]" name="an_channel">Analog_channels.</field>
             <field type="uint32_t" name="dig_channel">Bit mask of the Digital Switches' state</field>
         </message>
-        <message id="5015" name="ANV_MSG_GSMC_DATA">
+        <message id="5015" name="ANV_GSMC_DATA">
             <description>A message for transmitting the data from the ground station mission computer.</description>
             <field type="char[16]" name="gsmc_ip">Ground Station IP</field>
         </message>
-        <message id="5016" name="ANV_MSG_SYSID">
+        <message id="5016" name="ANV_SYSID">
             <description>A message for getting and setting sysids between ACs and GCSs</description>
             <field type="uint16_t" name="serial_number">AC serial number</field>
             <field type="uint8_t" name="sysid">AC sysid</field>
         </message>
-        <message id="5017" name="ANV_MSG_SPRAY_STATUS">
+        <message id="5017" name="ANV_SPRAY_STATUS">
             <description>Telemetry of the spray system.</description>
             <field type="uint16_t" name="measured_flowrate">Measured Flowrate</field>
             <field type="uint16_t" name="desired_flowrate">Desired Flowrate</field>
