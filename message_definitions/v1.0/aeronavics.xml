@@ -1,0 +1,250 @@
+<?xml version='1.0'?>
+<mavlink>
+    <include>ardupilotmega.xml</include>
+    <include>uAvionix.xml</include>
+    <include>icarous.xml</include>
+    <include>common.xml</include>
+    <include>storm32.xml</include>
+    <include>ASLUAV.xml</include>
+    <include>cubepilot.xml</include>
+    <enums>
+        <enum name="MAV_COMPONENT">
+            <!-- cID 0 is always reserved, it has the special meaning 'ALL COMPONENTS'. -->
+            <!-- cID 0 is defined in common.xml -->
+
+            <!-- This is no longer required in newer MAVLink builds, since MAV_COMP_ID_AUTOPILOT1 is now provided by common.xml. -->
+            <!-- entry value="1" name="MAV_COMP_ID_FCS1">
+                <description>cID for Primary Flight Controller.  Note that the Pixhawk hard codes C1, so this definition is just for convenience.</description>
+             </entry> -->
+
+            <!-- cID's 25-49 are used by Mission Computer elements of the Aeronavics Avionics Stack. -->
+            <entry value="25" name="MAV_COMP_ID_UNL_MC_MONOLITH">
+                <description>cID for monolithic elements on the Mission Computer, which don't have their own cID.  Most obviously, the parameter server uses this cID, so all elements using the parameter server should use this cID.</description>
+            </entry>
+            <entry value="26" name="MAV_COMP_ID_UNL_MC_CORE">
+                <description>cID for the Mission Computer 'cored' module, which monitors the health of other components and emits a heartbeat for the overall system.</description>
+            </entry>
+            <entry value="27" name="MAV_COMP_ID_UNL_MC_LOG">
+                <description>cID for the Mission Computer 'logd' module, which simply provides logging of all MAVlink messages.</description>
+            </entry>
+            <entry value="28" name="MAV_COMP_ID_UNL_MC_VIDEO">
+                <description>cID for the Mission Computer 'videod' module, which manages capture and streaming of imagery.</description>
+            </entry>
+            <entry value="29" name="MAV_COMP_ID_LCM_BRIDGE">
+                <description>cID for the Mission Computer 'bridge_lcmd' module, which governs the link between internal and external MAVlink comms.</description>
+            </entry>
+            <entry value="30" name="MAV_COMP_ID_SBP_BRIDGE">
+		    <deprecated since="2019-08" replaced_by="Nothing">Obsolete; the value will be reclaimed in the future.</deprecated>
+                <description>cID for the Mission Computer 'bridge_inject_uartd' module, which links between the mission computer and the RTK GPS.</description>
+            </entry>
+            <entry value="31" name="MAV_COMP_ID_UART_PAYCTL">
+                <description>cID for the Mission Computer 'bridge_uart' module, which links between the mission computer and the payload controller.</description>
+            </entry>
+            <entry value="32" name="MAV_COMP_ID_UART_RADCTL">
+                <description>cID for the Mission Computer 'bridge_uart' module, which links between mission computer and the airside radio controller.</description>
+            </entry>
+            <entry value="33" name="MAV_COMP_ID_UART_GCS">
+                <description>cID for the Mission Computer 'bridge_uart' module, which links between mission computer and the GCS controller.</description>
+            </entry>
+            <entry value="34" name="MAV_COMP_ID_UART_FC">
+                <description>cID for the Mission Computer 'bridge_uart' module, which links between mission computer and the flight controller.</description>
+            </entry>
+            <entry value="35" name="MAV_COMP_ID_UART_RTX">
+                <description>cID for the Mission Computer 'bridge_uart' module, which links between mission computer and the RC transciever.</description>
+            </entry>
+            <entry value="36" name="MAV_COMP_ID_UDPD_MAVROS">
+                <description>cID for the Mission Computer 'bridge_udpd' module, linking been internal LCM and MAVROS.  Note the cID is set by command line parameter, so this definition is just for convenience.</description>
+            </entry>
+            <entry value="37" name="MAV_COMP_ID_UDPD_MAVPROXY">
+                <description>cID for the Mission Computer 'bridge_udpd' module, linking between external LCM and MAVPROXY.  Note the cID is set by command line parameter, so this definition is just for convenience.</description>
+            </entry>
+            <entry value="38" name="MAV_COMP_ID_UDPD_DRONEKIT">
+                <description>cID for the Mission Computer 'bridge_udpd' module, linking between external LCM and DroneKit.  Note the cID is set by command line parameter, so this definition is just for convenience.</description>
+            </entry>
+            <entry value="39" name="MAV_COMP_ID_UDPD_DFLOGGER">
+                <description>cID for the Mission Computer 'bridge_udpd' module, linking between internal LCM and dataflash_logger.  Note the cID is set by command line parameter, so this definition is just for convenience.</description>
+            </entry>
+            <entry value="40" name="MAV_COMP_ID_UDPD_ROCOS">
+                <description>cID for the Mission Computer 'bridge_udpd' module, linking between internal LCM and ROCOS.  Note the cID is set by command line parameter, so this definition is just for convenience.</description>
+            </entry>
+            <entry value="41" name="MAV_COMP_ID_UDPD_ETHPAYLOAD">
+                <description>cID for the Mission Computer 'bridge_udpd' module, linking between internal LCM and custom ethernet payload.  Note the cID is set by command line parameter, so this definition is just for convenience.</description>
+            </entry>
+            <entry value="42" name="MAV_COMP_ID_UDPD_CD">
+                <description>cID for the Mission Computer 'bridge_udpd' module, linking between external LCM and a primary endpoint on the ground.  Note the cID is set by command line parameter, so this definition is just for convenience.</description>
+            </entry>
+            <entry value="43" name="MAV_COMP_ID_UDPD_TELEM">
+                <description>cID for the Mission Computer 'bridge_udpd' module, linking between external LCM and a secondary endpoint on the ground.  Note the cID is set by command line parameter, so this definition is just for convenience.</description>
+            </entry>
+            <entry value="44" name="MAV_COMP_ID_MONITOR_MICROHD">
+                <description>cID for the Mission Computer 'microhard_monitord' module, which queries both local and remote pDDL radios.  Note the cID is set by command line parameter, so this definition is just for convenience.</description>
+            </entry>
+            <entry value="45" name="MAV_COMP_ID_MONITOR_UAVCAN">
+                <description>cID for the Mission Computer 'can_monitord' module, which monitors UAVCAN traffic.  Note the cID is set by command line parameter, so this definition is just for convenience.</description>
+            </entry>
+            <entry value="46" name="MAV_COMP_ID_UART_RADCTL_MICROHARD">
+                <description>cID for the Mission Computer 'bridge_uart' module, which links between mission computer and the microhard onboard the airside radio controller.</description>
+            </entry>
+            <!-- cID 49 is used by MAVROS: the value is hard coded by mavros.launch, this definition is just provided so other components can recognise messages from MAVROS. -->
+            <entry value="49" name="MAV_COMP_ID_MAVROS">
+                <description>cID for MAVROS itself (not the bridge).  Note that mavros.launch hard codes 49, so this definition is just for convenience.</description>
+            </entry>
+
+            <!-- cID's 50-74 are used by other elements of the Aeronavics Avionics Stack. -->
+            <entry value="50" name="MAV_COMP_ID_RTK_GPS">
+                <description>cID for an RTK GPS unit.</description>
+            </entry>
+            <entry value="51" name="MAV_COMP_ID_PAYCTL">
+                <description>cID for the Advanced Payload Controller.</description>
+            </entry>
+            <entry value="52" name="MAV_COMP_ID_ASRB">
+                <description>cID for the Airside Router Board</description>
+            </entry>
+            <entry value="53" name="MAV_COMP_ID_GSCB">
+                <description>cID for the Ground Side Comms Board</description>
+            </entry>
+            <entry value="54" name="MAV_COMP_ID_GSIB">
+                <description>cID for the Ground Side Interface Board</description>
+            </entry>
+            <entry value="55" name="MAV_COMP_ID_ASPB">
+                <description>cID for the Ground Side Interface Board</description>
+            </entry>
+            <entry value="56" name="MAV_COMP_ID_CBR">
+                <description>cID for the CAN Breaout Board</description>
+            </entry>
+	        <entry value="57" name="MAV_COMP_ID_DATAFLASHLOGGER">
+                <description>cID for the Dataflash Logger on the Mission Computer.  This is outside the usual 25-49 range, but left because it's third party software and this is its default.</description>
+            </entry>
+            <entry value="58" name="MAV_COMP_ID_SBUS_DECODE">
+                <description>cID for the SBUS decoder on the Mission Computer.</description>
+            </entry>
+            <entry value="59" name="MAV_COMP_ID_IPDB">
+                <description>cID for the ICON power distribution board.</description>
+            </entry>
+        </enum>
+        <enum name="ANV_CONTROLLER">
+            <entry value="0" name="ANV_GS_CONTROLLER">
+                <description>Premium Ground Station controls</description>
+            </entry>
+            <entry value="1" name="ANV_HAND_CONTROLLER_AIRCRAFT">
+                <description>Hand controller for aircraft controls</description>
+            </entry>
+            <entry value="2" name="ANV_HAND_CONTROLLER_PAYLOAD">
+                <description>Hand controller for payload controls</description>
+            </entry>
+        </enum>
+        <enum name="ANV_SPRAY_ERROR">
+            <entry value="1" name="ANV_SPRAY_ERROR_FLOWRATE1">
+                <description>Nozzle 1 has a flow rate error</description>
+            </entry>
+            <entry value="2" name="ANV_SPRAY_ERROR_FLOWRATE2">
+                <description>Nozzle 2 has a flow rate error</description>
+            </entry>
+            <entry value="4" name="ANV_SPRAY_ERROR_FLOWRATE3">
+                <description>Nozzle 3 has a flow rate error</description>
+            </entry>
+            <entry value="8" name="ANV_SPRAY_ERROR_FLOWRATE4">
+                <description>Nozzle 4 has a flow rate error</description>
+            </entry>
+            <entry value="16" name="ANV_SPRAY_ERROR_LOW_PRESSURE">
+                <description>Low pressure detected in spray system</description>
+            </entry>
+            <entry value="32" name="ANV_SPRAY_ERROR_OVER_PRESSURE">
+                <description>Over pressure detected in spray system</description>
+            </entry>
+            <entry value="64" name="ANV_SPRAY_ERROR_NO_SPRAY">
+                <description>No spray remaining or error with the spray measurement system</description>
+            </entry>
+        </enum>
+    </enums>
+
+    <messages>
+        <message id="5000" name="ANV_REGULATOR_STATUS">
+            <description>A command for outputing a regulator's status. This includes it's output voltage, current and temperature.</description>
+            <field type="uint8_t" name="id">ID of the regulator</field>
+            <field type="uint16_t" name="voltage">Voltage output of the regulator measured in mV</field>
+            <field type="uint16_t" name="current">Current output of the regulator measured in mA</field>
+            <field type="uint16_t" name="temperature">Temerature of the regulator measured in milli Degrees Celsius</field>
+            <field type="uint16_t" name="max_rated_current">The rated current of the regulator measured in mA</field>
+            <field type="uint16_t" name="consumed_power">The integral of used power of the regulator. Measured in mAH</field>
+        </message>
+        <message id="5001" name="ANV_BUFFER_STATUS">
+            <description>A message for viewing a buffers status</description>
+            <field type="uint8_t" name="id">ID of the buffer</field>
+            <field type="uint16_t" name="buffer_type">Buffer type</field>
+            <field type="uint16_t" name="min_space"></field>
+            <field type="uint16_t" name="max_space">Temerature of the regulator measured in milli Degrees Celsius</field>
+            <field type="uint16_t" name="avg_space">The rated current of the regulator measured in mA</field>
+        </message>
+        <message id="5002" name="ANV_GSIB_DATA">
+            <description>A message for transmitting the data from the UI baord.</description>
+            <field type="uint32_t[11]" name="an_channel">Analog_channels.</field>
+            <field type="uint32_t" name="dig_channel">Bit mask of the Digital Switches' state</field>
+        </message>
+        <message id="5003" name="ANV_SBUS_DATA">
+            <description>A message for passing around a raw sbus frame.</description>
+            <field type="uint8_t[25]" name="sbus_data">Raw SBUS data</field>
+        </message>
+        <message id="5004" name="ANV_RADIO_DATA">
+            <description>A message for passing around control frames. This is very similar to ID 5003, but is intended to be sent to the airside receiver. This seperates the reception of sbus data and the transmition</description>
+            <field type="uint8_t" name="target_system">Target system ID</field>
+            <field type="uint8_t" name="target_component">Target component ID</field>
+            <field type="uint8_t[25]" name="sbus_data">Raw SBUS data</field>
+            <field type="uint64_t" name="timestamp">System time of when the message was sent</field>
+        </message>
+        <message id="5005" name="ANV_FIRMWARE_INFORMATION">
+            <description>A message for relaying currently running software verions</description>
+            <field type="uint32_t" name="firmware">Currently running firmware version</field>
+        </message>
+        <message id="5006" name="ANV_GSCB_DATA">
+            <description>A message for transmitting the data from the UI baord.</description>
+            <field type="uint8_t" name="active_profile">The current profile in use</field>
+            <field type="uint8_t" name="battery_1_enabled">1 if the battery is enabled, 0 otherwise</field>
+            <field type="uint8_t" name="battery_2_enabled">1 if the battery is enabled, 0 otherwise</field>
+            <field type="uint8_t" name="external_power_enabled">1 if the external power is enabled, 0 otherwise</field>
+            <field type="uint8_t" name="tray_fan_enabled">1 if the tray fan is enabled, 0 otherwise</field>
+            <field type="uint8_t" name="electronics_fan_enabled">1 if the electronics fan is enabled, 0 otherwise</field>
+        </message>
+        <message id="5007" name="ANV_LATENCY_REPORT">
+            <description>
+                A response to a specific target of a ping. 
+                This lets the target know the latency of the ping it responded to
+                This enables a remote box to update a delta clock for a the remote system to within approximately latency/2
+                If the latency is too high, the remote can determine what to do with it.
+            </description>
+            <field type="uint64_t" name="latency">The latency recorded by the host ping</field>
+            <field type="uint32_t" name="seq">The sequence ID of the ping request</field>
+        </message>
+        <message id="5013" name="ANV_SMART_PORT_POLL_PACKET">
+            <description> A message for passing around a smart port poll packet.</description>
+            <field type="uint8_t[2]" name="smart_port_poll_packet">Smart port poll packet</field>
+        </message>
+        <message id="5014" name="ANV_GS_CTRL_DATA">
+            <description>A message for transmitting the data from the UI baord.</description>
+            <field type="uint8_t" name="controller_id" enum="ANV_CONTROLLER">Controller id</field>
+            <field type="uint32_t[11]" name="an_channel">Analog_channels.</field>
+            <field type="uint32_t" name="dig_channel">Bit mask of the Digital Switches' state</field>
+        </message>
+        <message id="5015" name="ANV_GSMC_DATA">
+            <description>A message for transmitting the data from the ground station mission computer.</description>
+            <field type="char[16]" name="gsmc_ip">Ground Station IP</field>
+        </message>
+        <message id="5016" name="ANV_SYSID">
+            <description>A message for getting and setting sysids between ACs and GCSs</description>
+            <field type="uint16_t" name="serial_number">AC serial number</field>
+            <field type="uint8_t" name="sysid">AC sysid</field>
+        </message>
+        <message id="5017" name="ANV_SPRAY_STATUS">
+            <description>Telemetry of the spray system.</description>
+            <field type="uint16_t" name="measured_flowrate">Measured Flowrate</field>
+            <field type="uint16_t" name="desired_flowrate">Desired Flowrate</field>
+            <field type="double" name="total_sprayed_volume">Total Volume Sprayed</field>
+            <field type="double" name="armed_sprayed_volume">Armed Volume Sprayed</field>
+            <field type="double" name="last_tree_volume">Last Tree Volume</field>
+            <field type="double" name="spray_remaining">Spray Remaining</field>
+            <field type="uint16_t" name="pressure">Measured Pressure</field>
+            <field type="uint8_t" name="error" enum="ANV_SPRAY_ERROR">Spray Error</field>
+        </message>
+    </messages>
+</mavlink>
+
