@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <mavlink>
   <include>ardupilotmega.xml</include>
+  <include>aeronavics.xml</include>
   <!-- ASLUAV.xml range of IDs:
     messages: 8000 - 8999
     commands: 40001 - 41999
