@@ -124,6 +124,7 @@
             <description>Telemetry of the spray system.</description>
             <field type="uint16_t" name="measured_flowrate">Measured Flowrate</field>
             <field type="uint16_t" name="desired_flowrate">Desired Flowrate</field>
+            <field type="uint16_t" name="set_flowrate">Set Flowrate</field>
             <field type="double" name="total_sprayed_volume">Total Volume Sprayed</field>
             <field type="double" name="armed_sprayed_volume">Armed Volume Sprayed</field>
             <field type="double" name="last_tree_volume">Last Tree Volume</field>
