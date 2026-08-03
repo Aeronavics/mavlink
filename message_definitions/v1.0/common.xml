@@ -1131,6 +1131,27 @@
         <param index="6">Empty</param>
         <param index="7">Empty</param>
       </entry>
+      <entry value="188" name="MAV_CMD_DO_RETURN_PATH_START" hasLocation="true" isDestination="false">
+        <wip/>
+        <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+        <description>Mission item to specify the start of a failsafe/landing return-path segment (the end of the segment is the next MAV_CMD_DO_LAND_START item).
+          A vehicle that is using missions for landing (e.g. in a return mode) will join the mission on the closest path of the return-path segment (instead of MAV_CMD_DO_LAND_START or the nearest waypoint).
+          The main use case is to minimize the failsafe flight path in corridor missions, where the inbound/outbound paths are constrained (by geofences) to the same particular path.
+          The MAV_CMD_NAV_RETURN_PATH_START would be placed at the start of the return path.
+          If a failsafe occurs on the outbound path the vehicle will move to the nearest point on the return path (which is parallel for this kind of mission), effectively turning round and following the shortest path to landing.
+          If a failsafe occurs on the inbound path the vehicle is already on the return segment and will continue to landing.
+          The Latitude/Longitude/Altitude are optional, and may be set to 0 if not needed.
+          If specified, the item defines the waypoint at which the return segment starts.
+          If sent using as a command, the vehicle will perform a mission landing (using the land segment if defined) or reject the command if mission landings are not supported, or no mission landing is defined. When used as a command any position information in the command is ignored.
+        </description>
+        <param index="1">Empty</param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5" label="Latitude">Latitudee. 0: not used.</param>
+        <param index="6" label="Longitude">Longitudee. 0: not used.</param>
+        <param index="7" label="Altitude" units="m">Altitudee. 0: not used.</param>
+      </entry>
       <entry value="189" name="MAV_CMD_DO_LAND_START" hasLocation="true" isDestination="false">
         <description>Mission command to perform a landing. This is used as a marker in a mission to tell the autopilot where a sequence of mission items that represents a landing starts.
 	  It may also be sent via a COMMAND_LONG to trigger a landing, in which case the nearest (geographically) landing sequence in the mission will be used.
@@ -1640,6 +1661,21 @@
         <param index="4" reserved="true" default="NaN"/>
         <param index="7" reserved="true" default="NaN"/>
       </entry>
+      <entry value="533" name="MAV_CMD_SET_STORAGE_USAGE" hasLocation="false" isDestination="false">
+        <description>Set that a particular storage is the preferred location for saving photos, videos, and/or other media (e.g. to set that an SD card is used for storing videos).
+          There can only be one preferred save location for each particular media type: setting a media usage flag will clear/reset that same flag if set on any other storage.
+          If no flag is set the system should use its default storage.
+          A target system can choose to always use default storage, in which case it should ACK the command with MAV_RESULT_UNSUPPORTED.
+          A target system can choose to not allow a particular storage to be set as preferred storage, in which case it should ACK the command with MAV_RESULT_DENIED.</description>
+        <param index="1" label="Storage ID" minValue="0" increment="1">Storage ID (1 for first, 2 for second, etc.)</param>
+        <param index="2" label="Usage" enum="STORAGE_USAGE_FLAG">Usage flags</param>
+      </entry>
+      <entry value="534" name="MAV_CMD_SET_CAMERA_SOURCE" hasLocation="false" isDestination="false">
+        <description>Set camera source. Changes the camera's active sources on cameras with multiple image sensors.</description>
+        <param index="1" label="device id">Component Id of camera to address or 1-6 for non-MAVLink cameras, 0 for all cameras.</param>
+        <param index="2" label="primary source" enum="CAMERA_SOURCE">Primary Source</param>
+        <param index="3" label="secondary source" enum="CAMERA_SOURCE">Secondary Source. If non-zero the second source will be displayed as picture-in-picture.</param>
+      </entry>
       <entry value="600" name="MAV_CMD_JUMP_TAG" hasLocation="false" isDestination="false">
         <description>Tagged jump target. Can be jumped to with MAV_CMD_DO_JUMP_TAG.</description>
         <param index="1" label="Tag" minValue="0" increment="1">Tag.</param>
@@ -1919,6 +1955,16 @@
         <param index="7">Reserved (set to 0)</param>
       </entry>
       <!-- END of UAVCAN range -->
+      <entry value="5300" name="MAV_CMD_DO_SET_SAFETY_SWITCH_STATE" hasLocation="false" isDestination="false">
+        <description>Change state of safety switch.</description>
+        <param index="1" label="Desired State" enum="SAFETY_SWITCH_STATE">New safety switch state.</param>
+        <param index="2">Empty.</param>
+        <param index="3">Empty.</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty.</param>
+        <param index="6">Empty.</param>
+        <param index="7">Empty.</param>
+      </entry>
       <entry value="10001" name="MAV_CMD_DO_ADSB_OUT_IDENT" hasLocation="false" isDestination="false">
         <description>Trigger the start of an ADSB-out IDENT. This should only be used when requested to do so by an Air Traffic Controller in controlled airspace. This starts the IDENT which is then typically held for 18 seconds by the hardware per the Mode A, C, and S transponder spec.</description>
         <param index="1">Reserved (set to 0)</param>
@@ -3264,6 +3310,18 @@
         <description>Stream is h.264 on MPEG TS (URI gives the port number)</description>
       </entry>
     </enum>
+    <enum name="VIDEO_STREAM_ENCODING">
+      <description>Video stream encodings</description>
+      <entry value="0" name="VIDEO_STREAM_ENCODING_UNKNOWN">
+        <description>Stream encoding is unknown</description>
+      </entry>
+      <entry value="1" name="VIDEO_STREAM_ENCODING_H264">
+        <description>Stream encoding is H.264</description>
+      </entry>
+      <entry value="2" name="VIDEO_STREAM_ENCODING_H265">
+        <description>Stream encoding is H.265</description>
+      </entry>
+    </enum>
     <enum name="CAMERA_TRACKING_STATUS_FLAGS">
       <description>Camera tracking status flags</description>
       <entry value="0" name="CAMERA_TRACKING_STATUS_FLAGS_IDLE">
@@ -4133,6 +4191,15 @@
       </entry>
       <entry value="5" name="MISSION_STATE_COMPLETE">
         <description>Mission has executed all mission items.</description>
+      </entry>
+    </enum>
+    <enum name="SAFETY_SWITCH_STATE">
+      <description>Possible safety switch states.</description>
+      <entry value="0" name="SAFETY_SWITCH_STATE_SAFE">
+        <description>Safety switch is engaged and vehicle should be safe to approach.</description>
+      </entry>
+      <entry value="1" name="SAFETY_SWITCH_STATE_DANGEROUS">
+        <description>Safety switch is NOT engaged and motors, propellers and other actuators should be considered active.</description>
       </entry>
     </enum>
   </enums>
@@ -5940,6 +6007,8 @@
       <field type="uint16_t" name="hfov" units="deg">Horizontal Field of view.</field>
       <field type="char[32]" name="name">Stream name.</field>
       <field type="char[160]" name="uri">Video stream URI (TCP or RTSP URI ground station should connect to) or port number (UDP port ground station should listen to).</field>
+      <extensions/>
+      <field type="uint8_t" name="encoding" enum="VIDEO_STREAM_ENCODING">Encoding of stream.</field>
     </message>
     <message id="270" name="VIDEO_STREAM_STATUS">
       <description>Information about the status of a video stream. It may be requested using MAV_CMD_REQUEST_MESSAGE.</description>
@@ -5993,6 +6062,20 @@
       <field type="float" name="dist" units="m" invalid="NaN">Distance between camera and tracked object. NAN if unknown</field>
       <field type="float" name="hdg" units="rad" invalid="NaN">Heading in radians, in NED. NAN if unknown</field>
       <field type="float" name="hdg_acc" units="rad" invalid="NaN">Accuracy of heading, in NED. NAN if unknown</field>
+    </message>
+    <message id="277" name="CAMERA_THERMAL_RANGE">
+      <wip/>
+      <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
+      <description>Camera absolute thermal range. This can be streamed when the associated `VIDEO_STREAM_STATUS.flag` bit `VIDEO_STREAM_STATUS_FLAGS_THERMAL_RANGE_ENABLED` is set, but a GCS may choose to only request it for the current active stream. Use MAV_CMD_SET_MESSAGE_INTERVAL to define message interval (param3 indicates the stream id of the current camera, or 0 for all streams, param4 indicates the target camera_device_id for autopilot-attached cameras or 0 for MAVLink cameras).</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (time since system boot).</field>
+      <field type="uint8_t" name="stream_id" minValue="1" instance="true">Video Stream ID (1 for first, 2 for second, etc.)</field>
+      <field type="uint8_t" name="camera_device_id" default="0" minValue="0" maxValue="6">Camera id of a non-MAVLink camera attached to an autopilot (1-6).  0 if the component is a MAVLink camera (with its own component id).</field>
+      <field type="float" name="max" units="degC">Temperature max.</field>
+      <field type="float" name="max_point_x" invalid="NaN">Temperature max point x value (normalized 0..1, 0 is left, 1 is right), NAN if unknown.</field>
+      <field type="float" name="max_point_y" invalid="NaN">Temperature max point y value (normalized 0..1, 0 is top, 1 is bottom), NAN if unknown.</field>
+      <field type="float" name="min" units="degC">Temperature min.</field>
+      <field type="float" name="min_point_x" invalid="NaN">Temperature min point x value (normalized 0..1, 0 is left, 1 is right), NAN if unknown.</field>
+      <field type="float" name="min_point_y" invalid="NaN">Temperature min point y value (normalized 0..1, 0 is top, 1 is bottom), NAN if unknown.</field>
     </message>
     <message id="280" name="GIMBAL_MANAGER_INFORMATION">
       <description>Information about a high level gimbal manager. This message should be requested by a ground station using MAV_CMD_REQUEST_MESSAGE.</description>
