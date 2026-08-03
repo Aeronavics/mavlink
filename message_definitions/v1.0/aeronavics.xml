@@ -246,6 +246,11 @@
             <field type="uint16_t" name="pressure">Measured Pressure</field>
             <field type="uint8_t" name="error" enum="ANV_SPRAY_ERROR">Spray Error</field>
         </message>
+        <message id="5018" name="ANV_TAG_LOCATION">
+            <description>Send a location.</description>
+            <field type="int32_t" name="latitude" units="degE7" invalid="0">Latitude. If unknown: 0 (both Lat/Lon).</field>
+            <field type="int32_t" name="longitude" units="degE7" invalid="0">Longitude. If unknown: 0 (both Lat/Lon).</field>
+        </message>
     </messages>
 </mavlink>
 
